@@ -67,7 +67,7 @@ export default class UcInput extends React.Component {
           value={value}
           onChange={onChange}
           name={name}
-          style={{paddingLeft: label ? '1.24rem' : '0.24rem'}}
+          style={{paddingLeft: label ? '1.5rem' : '0.24rem'}}
         />
         {this.renderSpan(label)}
       </div>

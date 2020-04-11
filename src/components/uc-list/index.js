@@ -13,7 +13,8 @@ class UcList extends Component {
 
   static defaultProps = {
     index: undefined,
-    to: null
+    to: null,
+    style:{}
   };
 
   static propTypes = {
@@ -21,6 +22,7 @@ class UcList extends Component {
     data: propTypes.shape({
       _id: propTypes.string,
       title: propTypes.string,
+      img:propTypes.string,
       des: propTypes.string,
     }).isRequired,
     to: propTypes.shape({
@@ -35,13 +37,16 @@ class UcList extends Component {
     history.push({pathname:`${pathname}/${_id}`,search:`apiname=${apiname}`})
   };
   render() {
-    let {index,data,children} = this.props;
+    let {index,data,children,style} = this.props;
     return (
-      <div className={styles.Olist} onClick="getDetail">
-      	<img  :src="data.img" alt="">
+      <div className={styles.Olist}
+           style={style}
+           onClick={()=>this.to(data._id)}
+      >
+      	<img  src={data.img} alt=""/>
       	<p>
-      		<span>{{data.title}}</span><br>
-      		<strong>{{data.sub_title}}</strong>
+      		<span>{data.title}</span><br/>
+      		<strong>{data.sub_title}</strong>
       	</p>
       </div>
     )

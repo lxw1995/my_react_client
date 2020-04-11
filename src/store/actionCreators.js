@@ -7,7 +7,8 @@ export const clear = type => ({
 export const updateList = ({collectionName,type,params={_page:1,_limit:10}}) => dispatch=>{
   axios({url:`/api/goods/${collectionName}`,params})
     .then(
-      res=>dispatch({type,payload:res.data.data})
+      res=>dispatch({type,payload:res.data.data,})
+
     )
     .catch(
       err=>console.log('updateList',err)

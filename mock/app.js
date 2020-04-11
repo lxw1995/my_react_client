@@ -4,7 +4,7 @@ const path = require('path');
 const Mock = require('mockjs');
 
 let mock='/mock';//定义路由根别名
-let port=6666;//端口
+let port=3333;//端口
 
 //创建服务器
 const server = jsonServer.create();//创建jsonserver 服务对象  ~~ express()
@@ -22,6 +22,7 @@ server.use(jsonServer.bodyParser);//抓取body数据使用json-server中间件
 server.use((request, res, next) => {//可选 统一修改请求方式
   // console.log(1)
   // request.method = 'GET';
+  // 校验token
   next();
 });
 

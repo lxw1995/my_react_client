@@ -6,13 +6,13 @@
 		flex-wrap: wrap;
 	}
 	.Olist p {
-		float: right;
+		float: left;
 		width: 50%;
 		box-sizing: border-box;
-		padding: 10px;
+		padding: .4rem .2rem;
 	}
 	.Olist img {
-		width: 40%;
+		height: 100%;
 		float: left;
 	}
 	.Olist span {

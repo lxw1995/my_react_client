@@ -23,6 +23,7 @@ class UcSwiper extends Component{
     to: propTypes.shape({
       pathname:propTypes.string.isRequired,
       apiname:propTypes.string.isRequired,
+      style: propTypes.object,
     })
   };
 
@@ -34,9 +35,10 @@ class UcSwiper extends Component{
     history.push({pathname:`${pathname}/${_id}`,search:`apiname=${apiname}`});
   };
 
-  componentDidMount(){
+  componentDidUpdate(){
+	  // console.log('11','.'+styles.banner)
     //手写js
-    new Swipe($('.style_banner__q5UEw')[0],{
+    new Swipe($('.'+styles.banner)[0],{
       auto:2000,
       continuous:true,
       stopPropation:true,
@@ -48,14 +50,17 @@ class UcSwiper extends Component{
   }
 
   render(){
-    let {data} = this.props;//[{banner:'',title:'',sub_title,_id:},{}]
+    let {data,style} = this.props;//[{banner:'',title:'',sub_title,_id:},{}]
     return (
-      <div className={styles.banner}>
+      <div
+          className={styles.banner}
+          style={style}
+      >
         <ul className={styles.clearfix}>
           {
             data.map(item=>(
               <li key={item._id} onClick={()=>this.to(item._id)}>
-                <img src={item.banner} alt=""/>
+                <img src={this.baseUrl+item.banner} alt=""/>
                 <div className={styles["text-box"]}>
                   <h2>{item.title}</h2>
                   <p>{item.sub_title}</p>

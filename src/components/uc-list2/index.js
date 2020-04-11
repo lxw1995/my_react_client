@@ -9,7 +9,7 @@ import {withRouter} from 'react-router-dom'
 * to        {pathname:'',apiname:''}
 * */
 
-class UcList extends Component {
+class UcList2 extends Component {
 
   static defaultProps = {
     index: undefined,
@@ -53,4 +53,4 @@ class UcList extends Component {
   }
 }
 
-export default withRouter(UcList)
+export default withRouter(UcList2)

@@ -1,9 +1,14 @@
 
 
 .content{max-width:6.4rem; margin:0 auto; margin-top:0.6rem; padding-bottom:0.85rem;}
-.content .header{ padding:0.39rem 0.28rem 0.15rem 0.28rem; height:auto; background: none}
+.content .header{
+    padding:0.39rem 0.28rem 0.15rem 0.28rem;
+
+    height:auto; background: none}
 .header h2{ float:left; margin-right:0.18rem;}
-.header p{ float:left; margin-top:0.18rem; font-size:0.3rem;}
+.header p{ float:left;
+    margin-top:0.8rem; margin-left: .5rem;
+    color: red; font-size:0.5rem;}
 
 .content .cont{ padding:0 0.38rem; color:#494d4d;}
 .cont h3{ font-size:0.4rem; line-height:0.6rem; padding-bottom:0.25rem; border-bottom:1px solid #494d4d;}
@@ -30,3 +35,6 @@
 .foot-btn ul .fx{width:1.25rem;height:0.52rem;}
 .fx i{width:0.33rem;height:0.08rem;display:block; margin:0 auto; padding-top:0.15rem;}
 .fx i img{width:100%;}
+
+.clear:after{ display:block; content:''; clear:both;}
+.clear{ zoom:1;}

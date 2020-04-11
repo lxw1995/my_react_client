@@ -1,11 +1,15 @@
 import React,{Component} from "react";
 
 
-export default class Goods extends Component{
+export default class NoPage extends Component{
     render() {
         return (
-            <div className={'Goods'}>
-                <h3>商品</h3>
+            <div className={'NoPage'}>
+                <h1
+                    style={{display: 'flex',
+                    justifyContent:'center',
+                    alignItems: 'center'}}
+                >404</h1>
             </div>
         );
     }

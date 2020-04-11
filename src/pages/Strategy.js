@@ -1,50 +1,50 @@
 import React,{Component} from 'react';
 
-import Cell from "../components/cell";
-import UcButton from "../components/uc-button";
+
+import UcFind from "../components/uc-find";
+import styles from '../assets/css/strategy.module.css'
 import UcList from "../components/uc-list";
 
-
-export default class column extends Component{
+export default class Strategy extends Component{
 	state={
 	  column : []
 	};
 	
 	async componentDidMount(){
-	  let res =  await React.axios({url:'/api/goods/follow',params:{_page:1,_limit:3}})
+	  let res =  await React.axios({url:'/api/goods/find',params:{_page:1,_limit:8}})
 	  this.setState({column:res.data.data})
+
 	}
+	// get({apiname:'find',params:{_page:1,_limit:9}}).then(
+	// 	result=>commit('FIND',result)
+	// )
   render(){
 	  let {column}=this.state;
-	  console.log(this.props.match.url, this.props.match.path)
+	  // console.log(trip)
+	  // console.log(this.props.match.url, this.props.match.path)
     return (
-      <div className="pt">
-        {/*{*/}
-        {/*  column.map(item=>(*/}
-        {/*    <Cell*/}
-        {/*      key={item._id}*/}
-        {/*      data={item}*/}
-        {/*      to={{pathname:'/detail',apiname:'follow'}}*/}
-        {/*    >*/}
-		{/*	<UcButton style={{float:'right'}} size="mini" clickHandler={this.show}>+</UcButton>*/}
-		{/*	</Cell>*/}
-        {/*  ))*/}
-        {/*}*/}
-		  {
-			  column.map((item,index)=>(
-				  <UcList
-					  key={item._id}
-					  index={index}
-					  data={item}
-					  style={{background:''}}
-					  to={{pathname:'/detail',apiname:'home'}}
 
-				  />
-			  ))
-		  }
+		  <div className={styles.Find}>
+			  <div className={styles.header}>
+					  推荐观看
+			  </div>
+			  <div  className={styles.ofind}>
+				  {
+					  column.map(item=>(
+						  <UcFind
+							  key={item._id}
+							  data={item}
+							  style={{background:''}}
+							  to={{pathname:'/detail',apiname:'find'}}
+						  />
+					  ))
+				  }
+
+			  </div>
+		  </div>
 
 
-      </div>
+
     )
   }
 }

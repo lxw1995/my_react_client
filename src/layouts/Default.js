@@ -14,47 +14,130 @@ import React,{Component} from "react";
 //**Route**属性
 //path 路径
 //component 在地址匹配的时候React的组件才会被渲染
+// 第三异步组件库，组件懒加载，方法一
+import Loadable from 'react-loadable'
+// 第三异步组件库，组件懒加载，方法二
+import asyncComponent from "../plugins/asyncComponent";
+// 路由参数解构
+import {NavLink,Route,Switch,Redirect} from 'react-router-dom';
 
-import './Defaults.css';
-import {NavLink,Route,Switch,Redirect   } from 'react-router-dom';
-import Home from "../pages/Home";
+ // import Footer from "./footer";
+const Footer = Loadable({
+	loader: () => import('./footer'),
+	// loading: Loading,
+	loading:()=>{return null}
+});
+// import Home from "../pages/Home";
+const Home = Loadable({
+	loader: () => import('../pages/Home'),
+	// loading: Loading,
+	loading:()=>{return null}
+});
+// import Goods from "../pages/Goods";
+const Goods = asyncComponent(()=>import("../pages/Goods"))
+
+import SoSo from "../pages/SoSo";
+// import User from "../pages/User";
+const User = asyncComponent(()=>import("../pages/User"))
 import NoPage from "../pages/NoPage";
-import Goods from "../pages/Goods";
-import User from "../pages/User";
-import Login from "../pages/Login";
+import Trip from "../pages/Trip";
+import Follow from "../pages/Follow";
+import Detail from "../pages/Detail";
+import Loading from "../components/loading";
+// import Login from "../pages/Login";
+const Login = asyncComponent(()=>import("../pages/Login"))
 import Reg from "../pages/Reg";
-import Auth from "../guard/Auth";
+import XiAn from "../pages/xian";
+import Header from "./header";
+import pubsub from 'pubsub-js'
+import Strategy from "../pages/Strategy";
 
-export default class Defaults extends Component{
+export default class Default extends Component{
+	
+	
+	state={
+	  bNav:false,
+	  bFoot:false,
+	  bLoading:false
+	};
+	
+	constructor(props){
+	  super();
+	
+	  //订阅
+	  pubsub.subscribe('UPDATE_LOADING',(mess,data)=>{
+	    this.setState({bLoading:data})
+	  })
+	
+	}
+	
+	static getDerivedStateFromProps(nextProps,nextState){
+	
+	  // console.log('getDerivedStateFromProps','路由观测',nextProps);
+	
+	  let path = nextProps.location.pathname;
+	
+	  if (/follow|goods/.test(path)){
+	    return {
+	      bNav:true,
+	      bFoot:true
+	    }
+	  }
+	
+	  if (/login|reg|detail/.test(path)){
+	    return {
+	      bNav:false,
+	      bFoot:false
+	    }
+	  }
+	
+	  if (/user|home|strategy|trip/.test(path)){
+	    return {
+	      bNav:false,
+	      bFoot:true
+	    }
+	  }
+	
+	
+	}
+	
+	
     render() {
+		 let {bNav,bFoot,bLoading} = this.state;
         return (
-            <div className={'Defaults'}>
-                <h3>react-router-dom</h3>
-                <NavLink activeClassName='default__nav--active' to={'/home'}>首页</NavLink>
-                <NavLink activeClassName='default__nav--active' to={'/goods'}>商品</NavLink>
-                <NavLink activeClassName='default__nav--active' to={'/user'}>用户</NavLink>
-                <NavLink activeClassName='default__nav--active' to={'/login'}>登录</NavLink>
-                <NavLink activeStyle={{background:"#399",color:'orangered'}} to={'/reg'}>注册</NavLink>
+            <div className={'Default'}>
+                {/*<Loading/>*/}
+				{bLoading && <Loading/> }
+				{bNav && <Header/>}
                 <Switch>
+                    <Route  path={'/home'} component={Home}/>
 
-                    <Route path={'/home'} component={Home}/>
-                    {/*<Goods path={'/goods'} component={Goods}/>*/}
-                    <Auth path={'/goods'} component={Goods}/>
 
-                    {/*<Route path={'/user'} component={User}/>*/}
-                    <Auth path={'/user'} component={User}/>
-                    {/*render---Function---内联渲染和包装组件*/}
-                    <Route path={'/login'} render={(props)=>{
-                        console.log(props)
-                        return <Login {...props} lala={"hahha"}/>
+                    <Route exact path={'/goods/index'} component={Goods}/>
+					<Redirect exact from={'/goods'} to={'/goods/index'} />
+                    <Route exact path={'/goods/follow'} component={Follow}/>
 
-                    }}/>
-
+					<Route path={'/trip'} component={Trip}/>
+                    <Route path={'/login'} component={Login}/>
                     <Route path={'/reg'} component={Reg}/>
-                    <Redirect path={'/'} to={'/home'} />
+                    <Route exact path={`/soso`} component={SoSo}></Route>
+                    <Route exact path={'/user'} component={User}/>
+                    <Route exact path={'/strategy'} component={Strategy}/>
+                    <Route exact path={'/follow'} component={Follow}/>
+					<Route path="/detail/:_id" component={Detail}/>
+                    <Redirect exact from={'/'} to={'/home'} />
                     <Route component={NoPage}></Route>
+                    {/*-----------*/}
+                    {/*<Auth path={'/goods'} component={Goods}/>*/}
+                    {/*<Auth path={'/user'} component={User}/>*/}
+                    {/*/!*render---Function---内联渲染和包装组件*!/*/}
+                    {/*<Route path={'/login'} render={(props)=>{*/}
+                    {/*    console.log(props)*/}
+                    {/*    return <Login {...props} lala={"hahha"}/>*/}
                 </Switch>
+                {bFoot ? <Footer/> : null}
+
             </div>
-        );
+        )
     }
 }

@@ -13,11 +13,13 @@ class Cell extends Component {
 
   static defaultProps = {
     index: undefined,
-    to: null
+    to: null,
+	style:{}
   };
 
   static propTypes = {
     index: propTypes.number,
+	style: propTypes.object,
     data: propTypes.shape({
       _id: propTypes.string,
       title: propTypes.string,
@@ -34,11 +36,14 @@ class Cell extends Component {
     let {history,to:{pathname,apiname}}=this.props;
     history.push({pathname:`${pathname}/${_id}`,search:`apiname=${apiname}`})
   };
-
   render() {
-    let {index,data,children} = this.props;
+    let {index,data,children,style} = this.props;
     return (
-      <div className={styles["uc-cell"]} onClick={()=>this.to(data._id)}>
+      <div 
+		  className={styles["uc-cell"]} 
+		  style={style}
+		  onClick={()=>this.to(data._id)}
+		 >
         {
           children
         }

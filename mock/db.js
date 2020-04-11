@@ -10,7 +10,7 @@ let mapData = (n) => {
   for (var i = 1; i <= n; i++) {
 
     data.push({
-      id: i,
+      _id: 1000+i,
       title: "@ctitle(8,12)",
       des: "@csentence(10, 20)",
       time: "@integer(1553425967486,1553475967486)",
@@ -29,13 +29,13 @@ module.exports = {
 
   ...Mock.mock({
 
-    'home': mapData(32),//解决 auth_icon 不随机
-    'follow': mapData(21),
-    'column': mapData(11),
-    'banner|5': [
+    'home': mapData(60),//解决 auth_icon 不随机
+    'follow': mapData(50),
+    'column': mapData(40),
+    'banner|10': [
       {
         // 属性 id 是一个自增数，起始值为 1，每次增 1
-        'id|+1': 1,
+        '_id|+1': 1000,
         title: "@ctitle(4,8)",//标题型中文4到8个字
         sub_title: "@ctitle(6,12)",
         banner: mr.image('750x501', mr.color(), mr.cword(4,10)),//banner不变
